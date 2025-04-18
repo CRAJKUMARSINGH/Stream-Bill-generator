@@ -8,7 +8,7 @@ import os
 import zipfile
 import tempfile
 from jinja2 import Environment, FileSystemLoader
-from pypdf import PdfMerger
+from PyPDF2 import PdfMerger
 import numpy as np
 import platform
 from datetime import datetime
@@ -551,17 +551,12 @@ if uploaded_file is not None and st.button("Generate Bill"):
         # Merge PDFs
         current_date = datetime.now().strftime("%Y%m%d")
         pdf_output = os.path.join(TEMP_DIR, f"BILL_AND_DEVIATION_{current_date}.pdf")
-       writer = PdfWriter()
-
+        merger = PdfMerger()
         for pdf in pdf_files:
             if os.path.exists(pdf):
-                reader = PdfReader(pdf)
-                for page in reader.pages:
-                    writer.add_page(page)
-
-        with open(pdf_output, "wb") as out_file:
-            writer.write(out_file)
-                    
+                merger.append(pdf)
+        merger.write(pdf_output)
+        merger.close()
 
         # Generate Word docs
         word_files = []
