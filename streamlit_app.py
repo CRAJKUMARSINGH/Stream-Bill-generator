@@ -8,7 +8,7 @@ import os
 import zipfile
 import tempfile
 from jinja2 import Environment, FileSystemLoader
-from PyPDF2 import PdfMerger
+from pypdf2 import PdfMerger
 import numpy as np
 import platform
 from datetime import datetime
